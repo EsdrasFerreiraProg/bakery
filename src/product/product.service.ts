@@ -16,18 +16,24 @@ export class ProductService {
   }
 
   async findAll() {
-    return await `This action returns all product`;
+    return await this.productModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(id: string) {
+    return await this.productModel.findById(id).exec();
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async getById(id: string){
+    return await this.productModel.findById(id).exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async update(id: string, product: Product) {
+    await this.productModel.updateOne({_id:id}, product).exec();
+
+    return this.getById(id);
+
+  }
+  async remove(id: number) {
+    return this.productModel.deleteOne({_id:id}).exec();
   }
 }

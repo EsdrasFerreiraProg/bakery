@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UseP
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { Product } from '../../schemas/product.schema';
 
 @Controller('product')
 export class ProductController {
@@ -14,19 +15,19 @@ export class ProductController {
     return this.productService.create(createProductDto);
   }
 
-  @Get()
-  findAll() {
+  @Get('getAll')
+  public findAll() {
     return this.productService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.productService.findOne(+id);
+    return this.productService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(+id, updateProductDto);
+  update(@Param('id') id: string, @Body() product: Product) {
+    return this.productService.update(id, product);
   }
 
   @Delete(':id')
